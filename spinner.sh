@@ -45,7 +45,7 @@ function _spinner() {
             # start spinner
             i=1
             sp='\|/-'
-            delay=0.15
+            delay=${SPINNER_DELAY:-0.15}
 
             while :
             do
