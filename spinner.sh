@@ -49,7 +49,7 @@ function _spinner() {
 
             while :
             do
-                printf "\b${sp:i++%${#sp}:1}"
+                printf "\b${sp:$((i++%${#sp})):1}"
                 sleep $delay
             done
             ;;
