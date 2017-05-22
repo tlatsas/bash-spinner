@@ -1,6 +1,6 @@
 # spinner.sh
 
-  Display an awesome 'spinner' while running your long shell commands
+    Display an awesome 'spinner' while running your long shell commands
 
 Do *NOT* call _spinner function directly.
 Use spinner_{start,stop} wrapper functions!
