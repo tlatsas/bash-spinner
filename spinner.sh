@@ -15,7 +15,6 @@
 #       spinner_stop [your command's exit status]
 #
 # Also see: test.sh
-
 function _spinner() {
 
     # $1 start/stop
@@ -37,13 +36,29 @@ function _spinner() {
             # Start spinner
             i=1
             sp='\|/-'
-            delay=${SPINNER_DELAY:-0.15}
+            delay=${SPINNER_DELAY:-0.25}
+            counter=0
+            timer=0
 
             # Display message and position the cursor in $column column
             while :
             do
-                echo -en "\r[  ${sp:i++%${#sp}:1} ]  ${2}"
-                sleep $delay
+
+                # Display seconds or minutes it takes
+                if [[ ${SPINNER_TIMER} ]]; then
+                    counter=$(echo "(${counter} + ${delay})" | bc)
+                    timer=$(echo $counter/1 | bc)
+                    if [[ "${timer}" -lt 60 ]]; then
+                        timer="${timer} sec"
+                    else
+                        timer="$(echo ${timer} / 60 | bc) min "
+                    fi
+                    echo -en "\r[  ${sp:i++%${#sp}:1} ]  ${timer}\t${2}"
+                else
+                    echo -en "\r[  ${sp:i++%${#sp}:1} ]\t${2}"
+                fi
+
+                sleep ${delay}
             done
 
             ;;
