@@ -1,17 +1,16 @@
 #!/bin/bash
 
-source "$(pwd)/spinner.sh"
+. "$(pwd)/spinner.sh"
 
 # test success
-start_spinner 'sleeping for 2 secs...'
+spinner_start 'sleeping for 2 secs...'
 sleep 2
-stop_spinner $?
+spinner_stop $?
 
 # test fail
-start_spinner 'copying non-existen files...'
+spinner_start 'copying non-existen files...'
 # use sleep to give spinner time to fork and run
 # because cp fails instantly
 sleep 1
 cp 'file1' 'file2' > /dev/null 2>&1
-stop_spinner $?
-
+spinner_stop $?
