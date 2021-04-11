@@ -39,7 +39,7 @@ function _spinner() {
             # calculate the column where spinner and status msg will be displayed
             let column=$(tput cols)-${#2}-8
             # display message and position the cursor in $column column
-            echo -ne ${2}
+            printf "${2}"
             printf "%${column}s"
 
             # start spinner
@@ -49,29 +49,29 @@ function _spinner() {
 
             while :
             do
-                printf "\b${sp:i++%${#sp}:1}"
+                printf "\b${sp:$((i++%${#sp})):1}"
                 sleep $delay
             done
             ;;
         stop)
             if [[ -z ${3} ]]; then
-                echo "spinner is not running.."
+                printf "spinner is not running..\n"
                 exit 1
             fi
 
             kill $3 > /dev/null 2>&1
 
             # inform the user uppon success or failure
-            echo -en "\b["
+            printf "\b["
             if [[ $2 -eq 0 ]]; then
-                echo -en "${green}${on_success}${nc}"
+                printf "${green}${on_success}${nc}"
             else
-                echo -en "${red}${on_fail}${nc}"
+                printf "${red}${on_fail}${nc}"
             fi
-            echo -e "]"
+            printf "]\n"
             ;;
         *)
-            echo "invalid argument, try {start/stop}"
+            printf "invalid argument, try {start/stop}\n"
             exit 1
             ;;
     esac
